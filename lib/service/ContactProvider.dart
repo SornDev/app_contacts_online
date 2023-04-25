@@ -95,6 +95,57 @@ class ContactProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> RegisterUser(
+      String name,
+      String lastName,
+      String gender,
+      String email,
+      String web,
+      String birthDay,
+      String phoneNumber,
+      String password,
+      String job,
+      String jobType,
+      String addVillage,
+      String addCity,
+      String addProvince,
+      String addDetail,
+      File? imageFile) async {
+    //  String fileName = imageFile!.path.split('/').last;
+    FormData DataAddUser = FormData.fromMap({
+      'name': name,
+      'last_name': lastName,
+      'gender': gender,
+      'email': email,
+      'web': web,
+      'birth_day': birthDay,
+      'tel': phoneNumber,
+      'password': password,
+      'job': job,
+      'job_type': jobType,
+      'add_village': addVillage,
+      'add_city': addCity,
+      'add_province': addProvince,
+      'add_detail': addDetail,
+      // 'image': ''
+    });
+
+    final response = await dio().post('/register_user',
+        data: DataAddUser,
+        options: Options(validateStatus: ((status) => true)));
+
+    print(response.data);
+
+    if (response.statusCode == 200) {
+      // SetAdminPage(0);
+      GetAllUser();
+      notifyListeners();
+      return true;
+    }
+
+    return false;
+  }
+
   Future<bool> AddUser(
       String name,
       String lastName,

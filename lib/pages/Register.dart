@@ -382,7 +382,7 @@ class _RegisterState extends State<Register> {
                                           bool result = await Provider.of<
                                                       ContactProvider>(context,
                                                   listen: false)
-                                              .AddUser(
+                                              .RegisterUser(
                                                   _name.text,
                                                   _last_name.text,
                                                   Gender,
