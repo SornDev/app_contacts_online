@@ -1,4 +1,6 @@
 import 'package:app_register_online/service/AppProvider.dart';
+import 'package:app_register_online/service/AuthProvider.dart';
+import 'package:app_register_online/service/ContactProvider.dart';
 import 'package:flutter/material.dart';
 import 'pages/MainApp.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +9,10 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
-        create: (BuildContext context) => AppProvider(),
+        create: (BuildContext context) => AuthProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (BuildContext context) => ContactProvider(),
       )
     ],
     child: const MyApp(),

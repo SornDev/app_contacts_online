@@ -1,3 +1,5 @@
+import 'package:app_register_online/service/AuthProvider.dart';
+
 import 'AdminHome.dart';
 import 'Checking.dart';
 import 'package:flutter/material.dart';
@@ -24,15 +26,15 @@ class _MainAppState extends State<MainApp> {
     final prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString('token');
 
-    Provider.of<AppProvider>(context, listen: false).GetAllUser();
-    Provider.of<AppProvider>(context, listen: false)
+    // Provider.of<AppProvider>(context, listen: false).GetAllUser();
+    Provider.of<AuthProvider>(context, listen: false)
         .CheckLoggin(token: token.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<AppProvider>(
+      body: Consumer<AuthProvider>(
         builder: (context, auth, child) {
           if (auth.CheckLogin) {
             if (auth.isLoggin) {

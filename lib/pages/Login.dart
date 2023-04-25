@@ -1,4 +1,5 @@
 import 'package:app_register_online/service/AppProvider.dart';
+import 'package:app_register_online/service/AuthProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Form.dart';
@@ -182,14 +183,12 @@ class _LoginState extends State<Login> {
                     (_showMg)
                         ? Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: Consumer<AppProvider>(
-                                builder: (context, Auth, child) {
-                              return Text(
-                                Auth.massages_check_login.toString(),
-                                style:
-                                    TextStyle(fontSize: 16, color: Colors.red),
-                              );
-                            }),
+                            child: Text(
+                              Provider.of<AuthProvider>(context, listen: false)
+                                  .massages_check_login
+                                  .toString(),
+                              style: TextStyle(fontSize: 16, color: Colors.red),
+                            ),
                           )
                         : SizedBox(
                             height: 100,
@@ -213,7 +212,7 @@ class _LoginState extends State<Login> {
                                     _pressLogin = true;
                                   });
 
-                                  bool result = await Provider.of<AppProvider>(
+                                  bool result = await Provider.of<AuthProvider>(
                                           context,
                                           listen: false)
                                       .LoginAuth(
@@ -256,9 +255,7 @@ class _LoginState extends State<Login> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => FormAdd(
-                                          UserID: 0,
-                                        )));
+                                    builder: (context) => Register()));
                           },
                           child: const Text(
                             'ບໍ່ມີບັນຊີ, ລົງທະບຽນ',

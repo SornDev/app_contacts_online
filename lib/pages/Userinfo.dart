@@ -1,4 +1,6 @@
 import 'package:app_register_online/service/AppProvider.dart';
+import 'package:app_register_online/service/AuthProvider.dart';
+import 'package:app_register_online/service/ContactProvider.dart';
 import 'package:flutter/material.dart';
 import '../Utils/ServiceSetting.dart';
 import '../model/User.dart';
@@ -38,7 +40,7 @@ class _UserinfoState extends State<Userinfo> with TickerProviderStateMixin {
   void GetUserData() {
     // print(widget.UserID);
     List<User> listUser =
-        Provider.of<AppProvider>(context, listen: false).ListUser;
+        Provider.of<ContactProvider>(context, listen: false).ListUser;
     UserData = listUser.firstWhere((i) => i.id == widget.UserID);
     // print(UserData?.name);
   }
@@ -130,7 +132,7 @@ class _UserinfoState extends State<Userinfo> with TickerProviderStateMixin {
                     ],
                   ),
                 ),
-                if (Provider.of<AppProvider>(context, listen: false)
+                if (Provider.of<AuthProvider>(context, listen: false)
                         .user_login!
                         .user_type ==
                     'admin')
@@ -373,7 +375,7 @@ class _UserinfoState extends State<Userinfo> with TickerProviderStateMixin {
               onPressed: () async {
                 // Navigator.of(context).pop();
                 var result =
-                    await Provider.of<AppProvider>(context, listen: false)
+                    await Provider.of<ContactProvider>(context, listen: false)
                         .DeleteUser(UserID);
 
                 if (result) {

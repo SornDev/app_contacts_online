@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:app_register_online/Utils/ServiceSetting.dart';
 import 'package:app_register_online/pages/AdminHome.dart';
+import 'package:app_register_online/service/AuthProvider.dart';
+import 'package:app_register_online/service/ContactProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +60,7 @@ class _FormAddState extends State<FormAdd> {
         imageFile = File(_pickedFile.path);
       });
 
-      print(imageFile);
+      // print(imageFile);
     }
   }
 
@@ -74,7 +76,7 @@ class _FormAddState extends State<FormAdd> {
   void GetUserData() {
     // print(widget.UserID);
     List<User> listUser =
-        Provider.of<AppProvider>(context, listen: false).ListUser;
+        Provider.of<ContactProvider>(context, listen: false).ListUser;
     UserData = listUser.firstWhere((i) => i.id == widget.UserID);
     // print(UserData?.name);
 
@@ -416,185 +418,185 @@ class _FormAddState extends State<FormAdd> {
                           const SizedBox(
                             height: 10,
                           ),
-                          if (UserData!.user_type != 'admin')
-                            const Text(
-                              'ເບີໂທລະສັບ: (*)',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 238, 43, 153)),
-                            ),
-                          if (UserData!.user_type != 'admin')
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          if (UserData!.user_type != 'admin')
-                            TextFormField(
-                              maxLength: 10,
-                              keyboardType: TextInputType.number,
-                              controller: _phone_number,
-                              decoration: InputDecoration(
-                                counterText: '',
-                                prefixIcon: const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 20, top: 10, bottom: 10, right: 0),
-                                  child: Text(
-                                    '+ 856 ',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black45),
-                                  ),
+                          // if (UserData!.user_type != 'admin')
+                          const Text(
+                            'ເບີໂທລະສັບ: (*)',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 238, 43, 153)),
+                          ),
+                          // if (UserData!.user_type != 'admin')
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          // if (UserData!.user_type != 'admin')
+                          TextFormField(
+                            maxLength: 10,
+                            keyboardType: TextInputType.number,
+                            controller: _phone_number,
+                            decoration: InputDecoration(
+                              counterText: '',
+                              prefixIcon: const Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20, top: 10, bottom: 10, right: 0),
+                                child: Text(
+                                  '+ 856 ',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black45),
                                 ),
-                                contentPadding: const EdgeInsets.only(
-                                  left: 0,
-                                  top: 20,
-                                  bottom: 20,
-                                  right: 20,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                  borderSide: const BorderSide(
-                                    width: 1,
-                                    color: Colors.grey,
-                                    style: BorderStyle.none,
-                                  ),
-                                ),
-                                hintText: '....',
                               ),
-                              style: TextStyle(fontSize: 20),
-                              validator: (value) {
+                              contentPadding: const EdgeInsets.only(
+                                left: 0,
+                                top: 20,
+                                bottom: 20,
+                                right: 20,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50),
+                                borderSide: const BorderSide(
+                                  width: 1,
+                                  color: Colors.grey,
+                                  style: BorderStyle.none,
+                                ),
+                              ),
+                              hintText: '....',
+                            ),
+                            style: TextStyle(fontSize: 20),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '     ກະລຸນາປ້ອນເບີໂທ...';
+                              }
+                              return null;
+                            },
+                          ),
+                          // if (UserData!.user_type != 'admin')
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          // if (UserData!.user_type != 'admin')
+                          const Text(
+                            'ລະຫັດຜ່ານ: (*)',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 238, 43, 153)),
+                          ),
+                          // if (UserData!.user_type != 'admin')
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          // if (UserData!.user_type != 'admin')
+                          TextFormField(
+                            obscureText: _seepass1,
+                            controller: _password,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.only(
+                                  left: 20, top: 20, bottom: 20, right: 20),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50),
+                                borderSide: const BorderSide(
+                                  width: 1,
+                                  color: Colors.grey,
+                                  style: BorderStyle.none,
+                                ),
+                              ),
+                              hintText: '.....',
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _seepass1 = !_seepass1;
+                                    });
+                                  },
+                                  icon: (_seepass1)
+                                      ? Icon(
+                                          Icons.visibility_off,
+                                          color:
+                                              Color.fromARGB(255, 238, 43, 153),
+                                        )
+                                      : Icon(
+                                          Icons.visibility,
+                                          color:
+                                              Color.fromARGB(255, 238, 43, 153),
+                                        ),
+                                ),
+                              ),
+                            ),
+                            style: const TextStyle(fontSize: 20),
+                            validator: (value) {
+                              if (widget.UserID == 0) {
                                 if (value == null || value.isEmpty) {
-                                  return '     ກະລຸນາປ້ອນເບີໂທ...';
+                                  return 'ກະລຸນາປ້ອນລະຫັດຜ່ານ...';
                                 }
-                                return null;
-                              },
-                            ),
-                          if (UserData!.user_type != 'admin')
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          if (UserData!.user_type != 'admin')
-                            const Text(
-                              'ລະຫັດຜ່ານ: (*)',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 238, 43, 153)),
-                            ),
-                          if (UserData!.user_type != 'admin')
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          if (UserData!.user_type != 'admin')
-                            TextFormField(
-                              obscureText: _seepass1,
-                              controller: _password,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.only(
-                                    left: 20, top: 20, bottom: 20, right: 20),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                  borderSide: const BorderSide(
-                                    width: 1,
-                                    color: Colors.grey,
-                                    style: BorderStyle.none,
-                                  ),
-                                ),
-                                hintText: '.....',
-                                suffixIcon: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _seepass1 = !_seepass1;
-                                      });
-                                    },
-                                    icon: (_seepass1)
-                                        ? Icon(
-                                            Icons.visibility_off,
-                                            color: Color.fromARGB(
-                                                255, 238, 43, 153),
-                                          )
-                                        : Icon(
-                                            Icons.visibility,
-                                            color: Color.fromARGB(
-                                                255, 238, 43, 153),
-                                          ),
-                                  ),
+                              }
+                              return null;
+                            },
+                          ),
+                          // if (UserData!.user_type != 'admin')
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          // if (UserData!.user_type != 'admin')
+                          const Text(
+                            'ຍືນຍັນຫລະຫັດຜ່ານ: (*)',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 238, 43, 153)),
+                          ),
+                          // if (UserData!.user_type != 'admin')
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          // if (UserData!.user_type != 'admin')
+                          TextFormField(
+                            obscureText: _seepass2,
+                            controller: _confirm_password,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.only(
+                                  left: 20, top: 20, bottom: 20, right: 20),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50),
+                                borderSide: const BorderSide(
+                                  width: 1,
+                                  color: Colors.grey,
+                                  style: BorderStyle.none,
                                 ),
                               ),
-                              style: const TextStyle(fontSize: 20),
-                              validator: (value) {
-                                if (widget.UserID == 0) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'ກະລຸນາປ້ອນລະຫັດຜ່ານ...';
-                                  }
-                                }
-                                return null;
-                              },
-                            ),
-                          if (UserData!.user_type != 'admin')
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          if (UserData!.user_type != 'admin')
-                            const Text(
-                              'ຍືນຍັນຫລະຫັດຜ່ານ: (*)',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 238, 43, 153)),
-                            ),
-                          if (UserData!.user_type != 'admin')
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          if (UserData!.user_type != 'admin')
-                            TextFormField(
-                              obscureText: _seepass2,
-                              controller: _confirm_password,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.only(
-                                    left: 20, top: 20, bottom: 20, right: 20),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                  borderSide: const BorderSide(
-                                    width: 1,
-                                    color: Colors.grey,
-                                    style: BorderStyle.none,
-                                  ),
-                                ),
-                                hintText: '.....',
-                                suffixIcon: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _seepass2 = !_seepass2;
-                                      });
-                                    },
-                                    icon: (_seepass2)
-                                        ? Icon(
-                                            Icons.visibility_off,
-                                            color: Color.fromARGB(
-                                                255, 238, 43, 153),
-                                          )
-                                        : Icon(
-                                            Icons.visibility,
-                                            color: Color.fromARGB(
-                                                255, 238, 43, 153),
-                                          ),
-                                  ),
+                              hintText: '.....',
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _seepass2 = !_seepass2;
+                                    });
+                                  },
+                                  icon: (_seepass2)
+                                      ? Icon(
+                                          Icons.visibility_off,
+                                          color:
+                                              Color.fromARGB(255, 238, 43, 153),
+                                        )
+                                      : Icon(
+                                          Icons.visibility,
+                                          color:
+                                              Color.fromARGB(255, 238, 43, 153),
+                                        ),
                                 ),
                               ),
-                              style: const TextStyle(fontSize: 20),
-                              validator: (value) {
-                                if (widget.UserID == 0) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'ກະລຸນາຍືນຍັນລະຫັດຜ່ານ...';
-                                  }
-                                }
-                                return null;
-                              },
                             ),
+                            style: const TextStyle(fontSize: 20),
+                            validator: (value) {
+                              if (widget.UserID == 0) {
+                                if (value == null || value.isEmpty) {
+                                  return 'ກະລຸນາຍືນຍັນລະຫັດຜ່ານ...';
+                                }
+                              }
+                              return null;
+                            },
+                          ),
                           SizedBox(
                             height: 10,
                           ),
@@ -894,7 +896,8 @@ class _FormAddState extends State<FormAdd> {
                                     });
 
                                     bool result =
-                                        await Provider.of<AppProvider>(context,
+                                        await Provider.of<ContactProvider>(
+                                                context,
                                                 listen: false)
                                             .AddUser(
                                                 _name.text,
@@ -918,6 +921,9 @@ class _FormAddState extends State<FormAdd> {
                                         _pressAdd = false;
                                       });
                                       Snackbar('ບັນທຶກຂໍ້ມູນສຳເລັດ!');
+                                      Provider.of<AuthProvider>(context,
+                                              listen: false)
+                                          .SetAdminPage(0);
                                     } else {
                                       setState(() {
                                         _pressAdd = false;
@@ -936,7 +942,8 @@ class _FormAddState extends State<FormAdd> {
 
                                   if (_password.text == '') {
                                     bool result =
-                                        await Provider.of<AppProvider>(context,
+                                        await Provider.of<ContactProvider>(
+                                                context,
                                                 listen: false)
                                             .UpdateUserEdit(
                                                 widget.UserID,
@@ -986,7 +993,7 @@ class _FormAddState extends State<FormAdd> {
                                       });
 
                                       bool result =
-                                          await Provider.of<AppProvider>(
+                                          await Provider.of<ContactProvider>(
                                                   context,
                                                   listen: false)
                                               .UpdateUserEdit(

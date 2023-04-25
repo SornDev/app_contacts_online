@@ -1,5 +1,7 @@
 import 'package:app_register_online/service/AppProvider.dart';
+import 'package:app_register_online/service/ContactProvider.dart';
 import 'package:flutter/material.dart';
+import '../service/AuthProvider.dart';
 import 'ListContact.dart';
 import 'Form.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +17,7 @@ class _AdminHomeState extends State<AdminHome> {
   // int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    Provider.of<AppProvider>(context, listen: false).SetAdminPage(index);
+    Provider.of<AuthProvider>(context, listen: false).SetAdminPage(index);
     //setState(() {
     //  print(Provider.of<AppProvider>(context, listen: false).isAdmin);
     // _selectedIndex = index;
@@ -30,10 +32,12 @@ class _AdminHomeState extends State<AdminHome> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppProvider>(
+    return Consumer<ContactProvider>(
       builder: (context, Auth, child) {
         return Scaffold(
-          body: SafeArea(child: _widgetOptions.elementAt(Auth.AdminPage)),
+          body: SafeArea(
+              child: _widgetOptions.elementAt(
+                  Provider.of<AuthProvider>(context, listen: false).AdminPage)),
           bottomNavigationBar: BottomNavigationBar(
             backgroundColor: Color.fromARGB(255, 238, 43, 153),
             items: const <BottomNavigationBarItem>[
@@ -46,7 +50,8 @@ class _AdminHomeState extends State<AdminHome> {
                 label: 'ເພີ່ມສະມາຊິກໃໝ່',
               ),
             ],
-            currentIndex: Auth.AdminPage,
+            currentIndex:
+                Provider.of<AuthProvider>(context, listen: false).AdminPage,
             selectedItemColor: Colors.white,
             unselectedItemColor: Colors.grey[400],
             onTap: _onItemTapped,

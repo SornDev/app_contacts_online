@@ -1,3 +1,5 @@
+import 'package:app_register_online/service/AuthProvider.dart';
+import 'package:app_register_online/service/ContactProvider.dart';
 import 'package:flutter/material.dart';
 import '../Utils/ServiceSetting.dart';
 import '../model/User.dart';
@@ -23,7 +25,7 @@ class _ListContactState extends State<ListContact> {
   }
 
   void CheckGetUser() async {
-    Provider.of<AppProvider>(context, listen: false).GetAllUser();
+    Provider.of<ContactProvider>(context, listen: false).GetAllUser();
     // AllList = Provider.of<AppProvider>(context, listen: false).ListUser;
   }
 
@@ -56,7 +58,7 @@ class _ListContactState extends State<ListContact> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppProvider>(
+    return Consumer<ContactProvider>(
       builder: (context, Auth, child) {
         return Scaffold(
           backgroundColor: Colors.grey[100],
@@ -80,23 +82,30 @@ class _ListContactState extends State<ListContact> {
                         ),
                         PopupMenuButton<SampleItem>(
                           offset: const Offset(0, 70),
-                          child: (Auth.user_login!.image != '')
-                              ? CircleAvatar(
-                                  maxRadius: 26,
-                                  backgroundImage: NetworkImage(BaseURL +
-                                      '/img/' +
-                                      Auth.user_login!.image),
-                                )
-                              : CircleAvatar(
-                                  maxRadius: 26,
-                                  child: Icon(
-                                    Icons.account_circle,
-                                    size: 50,
-                                    color: Colors.white,
-                                  ),
-                                  backgroundColor:
-                                      Color.fromARGB(255, 238, 43, 153),
-                                ),
+                          child:
+                              (Provider.of<AuthProvider>(context, listen: false)
+                                          .user_login!
+                                          .image !=
+                                      '')
+                                  ? CircleAvatar(
+                                      maxRadius: 26,
+                                      backgroundImage: NetworkImage(BaseURL +
+                                          '/img/' +
+                                          Provider.of<AuthProvider>(context,
+                                                  listen: false)
+                                              .user_login!
+                                              .image),
+                                    )
+                                  : CircleAvatar(
+                                      maxRadius: 26,
+                                      child: Icon(
+                                        Icons.account_circle,
+                                        size: 50,
+                                        color: Colors.white,
+                                      ),
+                                      backgroundColor:
+                                          Color.fromARGB(255, 238, 43, 153),
+                                    ),
 
                           initialValue: selectedMenu,
                           // Callback that sets the selected popup menu item.
@@ -110,7 +119,11 @@ class _ListContactState extends State<ListContact> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => Userinfo(
-                                              UserID: Auth.user_login!.id,
+                                              UserID: Provider.of<AuthProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .user_login!
+                                                  .id,
                                             )));
                               }
                               if (item == SampleItem.user_edit) {
@@ -119,11 +132,15 @@ class _ListContactState extends State<ListContact> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => FormAdd(
-                                              UserID: Auth.user_login!.id,
+                                              UserID: Provider.of<AuthProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .user_login!
+                                                  .id,
                                             )));
                               }
                               if (item == SampleItem.user_logout) {
-                                Future<bool> result = Provider.of<AppProvider>(
+                                Future<bool> result = Provider.of<AuthProvider>(
                                         context,
                                         listen: false)
                                     .LoginOut();
@@ -204,7 +221,7 @@ class _ListContactState extends State<ListContact> {
                         const EdgeInsets.only(right: 15, left: 15, bottom: 10),
                     child: TextField(
                       onChanged: (value) {
-                        Provider.of<AppProvider>(context, listen: false)
+                        Provider.of<ContactProvider>(context, listen: false)
                             .SearchContact(value);
                       },
                       decoration: InputDecoration(
@@ -242,7 +259,7 @@ class _ListContactState extends State<ListContact> {
                           top: 10, right: 15, left: 15, bottom: 10),
                       child: Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: Text(
                               'ລາຍການ ສະມາຊິກ',
                               style: TextStyle(
@@ -252,7 +269,8 @@ class _ListContactState extends State<ListContact> {
                           ),
                           IconButton(
                             onPressed: () {
-                              Provider.of<AppProvider>(context, listen: false)
+                              Provider.of<ContactProvider>(context,
+                                      listen: false)
                                   .GetAllUser();
                             },
                             icon: Icon(Icons.refresh),
@@ -272,13 +290,29 @@ class _ListContactState extends State<ListContact> {
                               : ListView.builder(
                                   padding: EdgeInsets.only(
                                       right: 15, left: 15, bottom: 10),
-                                  itemCount: Auth.ListUserSearch.length,
+                                  itemCount: Provider.of<ContactProvider>(
+                                          context,
+                                          listen: false)
+                                      .ListUserSearch
+                                      .length,
                                   itemBuilder: ((context, index) {
                                     return ListContact(
-                                        Auth.ListUserSearch[index].image,
-                                        Auth.ListUserSearch[index].name,
-                                        Auth.ListUserSearch[index].tel,
-                                        Auth.ListUserSearch[index].id);
+                                        Provider.of<ContactProvider>(context,
+                                                listen: false)
+                                            .ListUserSearch[index]
+                                            .image,
+                                        Provider.of<ContactProvider>(context,
+                                                listen: false)
+                                            .ListUserSearch[index]
+                                            .name,
+                                        Provider.of<ContactProvider>(context,
+                                                listen: false)
+                                            .ListUserSearch[index]
+                                            .tel,
+                                        Provider.of<ContactProvider>(context,
+                                                listen: false)
+                                            .ListUserSearch[index]
+                                            .id);
                                   }),
                                 )
                           // ListView(
